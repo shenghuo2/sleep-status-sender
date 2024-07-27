@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="16dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_awake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="睡醒"
+        android:textSize="24sp"
+        android:padding="32dp"
+        android:backgroundTint="@color/md_theme_primary"
+        android:textColor="@color/md_theme_on_primary"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="120dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_sleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="睡着"
+        android:textSize="24sp"
+        android:padding="32dp"
+        android:backgroundTint="@color/md_theme_secondary"
+        android:textColor="@color/md_theme_on_secondary"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/btn_awake"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>

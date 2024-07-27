@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="base_url"
+        android:title="Base URL"
+        android:summary="Enter the base URL for the API"
+        android:defaultValue="https://example.com/"
+        android:inputType="textUri"
+        android:dialogMessage="Please use HTTPS for security reasons."/>
+
+    <Preference
+        android:key="test_connection"
+        android:title="Test Connection"
+        android:summary="Test the connection to the server"/>
+
+</PreferenceScreen>

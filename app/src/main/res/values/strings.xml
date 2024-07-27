@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">sleep-status-sender</string>
+    <string name="settings">Settings</string>
+</resources>
