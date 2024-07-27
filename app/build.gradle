@@ -19,6 +19,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // 配置输出文件名
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def abi = variant.name
+                    outputFileName = "app-${abi}.apk"
+                }
+            }
         }
     }
     compileOptions {

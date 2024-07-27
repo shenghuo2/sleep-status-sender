@@ -7,21 +7,3 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-android {
-    // 其他配置
-
-    buildTypes {
-        release {
-            // 其他配置
-
-            // 配置输出文件名
-            applicationVariants.all { variant ->
-                variant.outputs.all { output ->
-                    def abi = variant.productFlavors.get(0).name
-                    outputFileName = "app-${abi}-release.apk"
-                }
-            }
-        }
-    }
-}
