@@ -53,6 +53,9 @@ public class SettingsActivity extends AppCompatActivity {
                         if (!url.endsWith("/")) {
                             url += "/";
                         }
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+                        editor.putString("base_url", url);
+                        editor.apply();
                         preference.setSummary(url);
                         return true;
                     }

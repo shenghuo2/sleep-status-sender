@@ -9,6 +9,13 @@
         android:inputType="textUri"
         android:dialogMessage="Please use HTTPS for security reasons."/>
 
+    <EditTextPreference
+        android:key="api_key"
+        android:title="API Key"
+        android:summary="Enter the API key"
+        android:defaultValue="default_key"
+        android:inputType="text"/>
+
     <Preference
         android:key="test_connection"
         android:title="Test Connection"

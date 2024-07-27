@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private String baseUrl;
+    private String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         baseUrl = sharedPreferences.getString("base_url", "https://example.com/");
+        key = sharedPreferences.getString("api_key", "default_key");
 
         Button btnAwake = findViewById(R.id.btn_awake);
         Button btnSleep = findViewById(R.id.btn_sleep);
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         baseUrl = sharedPreferences.getString("base_url", "https://example.com/");
+        key = sharedPreferences.getString("api_key", "default_key");
     }
 
     @Override
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendRequest(int status) {
-        String url = baseUrl + "change?key=default_key&status=" + status;
+        String url = baseUrl + "change?key=" + key + "&status=" + status;
         Log.d(TAG, "Request URL: " + url);
 
         RequestQueue queue = Volley.newRequestQueue(this);

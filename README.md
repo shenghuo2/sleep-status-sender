@@ -49,17 +49,18 @@ Sleep Status Sender 是一个用于上报睡眠状态的 Android 应用。用户
 
 ## 使用截图
 
-![index](img.png)
+<img src="img.png" alt="index" style="zoom: 33%;" />
 
-![settings](img_1.png)
+<img src="Screenshot_2024-07-27-22-06-42-840_cn.shenghuo2.c.jpg" alt="Screenshot_2024-07-27-22-06-42-840_cn.shenghuo2.c" style="zoom:33%;" />
 
 ## TODO
 
 - [ ] 增加自定义背景功能
 - [ ] 使用 Material Design 3 主题
 - [ ] 增加状态查询页
-- [ ] 单独设置 Key 值
+- [x] 单独设置 Key 值
 - [ ] 优化用户界面和体验
+- [ ] 添加app图标
 
 ## 项目结构
 
