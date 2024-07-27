@@ -53,9 +53,12 @@ public class SettingsActivity extends AppCompatActivity {
                         if (!url.endsWith("/")) {
                             url += "/";
                         }
+
+                        // 保存修改后的URL到SharedPreferences
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
                         editor.putString("base_url", url);
                         editor.apply();
+
                         preference.setSummary(url);
                         return true;
                     }
@@ -69,6 +72,12 @@ public class SettingsActivity extends AppCompatActivity {
                     public boolean onPreferenceClick(Preference preference) {
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                         String baseUrl = sharedPreferences.getString("base_url", "https://example.com/");
+
+                        // Ensure baseUrl ends with "/"
+                        if (!baseUrl.endsWith("/")) {
+                            baseUrl += "/";
+                        }
+
                         String url = baseUrl + "status";
 
                         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest

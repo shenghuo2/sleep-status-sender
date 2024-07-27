@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
         baseUrl = sharedPreferences.getString("base_url", "https://example.com/");
         key = sharedPreferences.getString("api_key", "default_key");
 
+        // Ensure baseUrl ends with "/"
+        if (!baseUrl.endsWith("/")) {
+            baseUrl += "/";
+        }
+
         Button btnAwake = findViewById(R.id.btn_awake);
         Button btnSleep = findViewById(R.id.btn_sleep);
 
@@ -63,6 +68,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         baseUrl = sharedPreferences.getString("base_url", "https://example.com/");
         key = sharedPreferences.getString("api_key", "default_key");
+
+        // Ensure baseUrl ends with "/"
+        if (!baseUrl.endsWith("/")) {
+            baseUrl += "/";
+        }
     }
 
     @Override
