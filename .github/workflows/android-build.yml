@@ -51,7 +51,7 @@ jobs:
         echo "android.enableJetifier=true" >> gradle.properties
 
     - name: Build APK
-      run: ./gradlew assembleRelease -Pabi=${{ matrix.abi }}
+      run: ./gradlew assemble${{ matrix.abi }}Release
 
     - name: Upload APK
       uses: actions/upload-artifact@v2
