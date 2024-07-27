@@ -19,24 +19,52 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // 配置输出文件名
-            applicationVariants.all { variant ->
-                variant.outputs.all { output ->
-                    def abi = variant.name
-                    outputFileName = "app-${abi}.apk"
-                }
+        }
+    }
+
+    flavorDimensions "abi"
+    productFlavors {
+        arm {
+            dimension "abi"
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
+        }
+        arm64 {
+            dimension "abi"
+            ndk {
+                abiFilters "arm64-v8a"
+            }
+        }
+        x86 {
+            dimension "abi"
+            ndk {
+                abiFilters "x86"
+            }
+        }
+        x86_64 {
+            dimension "abi"
+            ndk {
+                abiFilters "x86_64"
             }
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
 }
 
+android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+        def flavor = variant.flavorName
+        def buildType = variant.buildType.name
+        output.outputFileName = "app-${flavor}-${buildType}.apk"
+    }
+}
+
 dependencies {
-
-
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -45,4 +73,3 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.android.material:material:1.6.1'
 }
-
