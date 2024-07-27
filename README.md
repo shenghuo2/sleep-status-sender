@@ -1,6 +1,3 @@
-当然！以下是更新后的 `README.md` 文件，包含你要求的内容：
-
-```markdown
 # Sleep Status Sender
 
 Sleep Status Sender 是一个用于上报睡眠状态的 Android 应用。用户可以通过该应用选择“睡醒”或“睡着”状态，并将状态发送到指定的服务器。此外，应用还提供了一个设置页面，用户可以配置服务器的 BASE_URL，并测试与服务器的连接。
