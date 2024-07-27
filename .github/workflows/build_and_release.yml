@@ -72,14 +72,15 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Download Build Artifacts
+    - name: Download all build artifacts
       uses: actions/download-artifact@v2
       with:
-        name: app-${{ matrix.abi }}-release
+        name: '*'
         path: ./release
 
     - name: Create GitHub Release
@@ -99,8 +100,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./release/app-${{ matrix.abi }}-release.apk
-        asset_name: app-${{ matrix.abi }}-release.apk
+        asset_path: ./release/app-*-release.apk
+        asset_name: app-{{ matrix.abi }}-release.apk
         asset_content_type: application/vnd.android.package-archive
 
     - name: Upload SHA256
