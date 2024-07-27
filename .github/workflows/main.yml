@@ -1,0 +1,114 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        abi: [arm, arm64, x86, x86_64]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'zulu'
+        java-version: '11'
+
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        api-level: 30
+        build-tools: 30.0.3
+
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: ${{ runner.os }}-gradle-
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+
+    - name: Ensure gradle.properties
+      run: |
+        echo "android.useAndroidX=true" >> gradle.properties
+        echo "android.enableJetifier=true" >> gradle.properties
+
+    - name: Build APK
+      run: ./gradlew assemble${{ matrix.abi }}Release
+
+    - name: List output files
+      run: ls -R app/build/outputs
+
+    - name: Calculate SHA256
+      run: |
+        cd app/build/outputs/apk/${{ matrix.abi }}/release
+        sha256sum app-${{ matrix.abi }}-release.apk > sha256_sum.txt
+
+    - name: Upload APK and SHA256
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-${{ matrix.abi }}-release
+        path: |
+          app/build/outputs/apk/${{ matrix.abi }}/release/app-${{ matrix.abi }}-release.apk
+          app/build/outputs/apk/${{ matrix.abi }}/release/sha256_sum.txt
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Download Build Artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: app-${{ matrix.abi }}-release
+        path: ./release
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.0
+        release_name: Release v1.0.0
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./release/app-${{ matrix.abi }}-release.apk
+        asset_name: app-${{ matrix.abi }}-release.apk
+        asset_content_type: application/vnd.android.package-archive
+
+    - name: Upload SHA256
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./release/sha256_sum.txt
+        asset_name: sha256_sum.txt
+        asset_content_type: text/plain
