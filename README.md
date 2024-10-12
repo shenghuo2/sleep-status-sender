@@ -20,11 +20,11 @@ Sleep Status Sender 是一个用于上报睡眠状态的 Android 应用。用户
 - Android Studio
 - Android SDK
 
-### 安装步骤
+### 构建步骤
 
 1. 克隆此仓库到本地：
     ```bash
-    git clone https://github.com/shenghuo2/sleep-status.git
+    git clone https://github.com/shenghuo2/sleep-status-sender.git
     ```
 
 2. 在 Android Studio 中打开项目：
